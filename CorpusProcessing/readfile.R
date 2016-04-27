@@ -5,29 +5,35 @@ library(tm)
 setwd("C:/Development/R Projects/Capstone/Dataset")
 setwd("C:/Development/R Projects/Dataset")
 
-# con <- file("en_US.blogs.txt", open="r")
-con <- file("en_US.twitter.txt", open="rb")
+con <- file("twitter1000.txt", open="rb")
 twitter <- readLines(con)
 close(con)
 myCorpus <- Corpus(VectorSource(twitter[1:1000]))
+rm(twitter)
 
-con <- file("twitter100000.txt", open="rb")
-twitter <- readLines(con)
-close(con)
-# myCorpus <- Corpus(VectorSource(twitter))
-myCorpus <- Corpus(VectorSource(twitter[1:100000]))
+myCorpus[523]
+inspect(myCorpus[523])
 
 myCorpus <- tm_map(myCorpus, content_transformer(tolower))
 
-# I have removed the PlainTextDocument transformation.
-# The results are different and I am not even sure what it does.
-# myCorpus <- tm_map(myCorpus, PlainTextDocument)
 
-myCorpus <- tm_map(myCorpus, removeNumbers)
+for(j in seq(myCorpus))   
+{   
+  myCorpus[[j]] <- gsub("@", " ", myCorpus[[j]])   
+  myCorpus[[j]] <- gsub("\\|", " ", myCorpus[[j]])   
+} 
+
+# I have removed the PlainTextDocument transformation.
+# The results are weird and I am not even sure what it does.
+myCorpus <- tm_map(myCorpus, PlainTextDocument)
+
+# Numbers seem to generate many tokens that can be ignored
+# myCorpus <- tm_map(myCorpus, removeNumbers)
 myCorpus <- tm_map(myCorpus, removePunctuation)
 myCorpus <- tm_map(myCorpus, stripWhitespace)
 myCorpus = tm_map(myCorpus, removeWords, stopwords("english"))
 
+# I have deliberately chosen not to use stemming
 # myCorpus = tm_map(myCorpus, stemDocument) 
 
 # loveCount <- sum(str_count(res, "love"))
@@ -46,7 +52,8 @@ TrigramTokenizer <-
   function(x)
     unlist(lapply(ngrams(words(x), 3), paste, collapse = " "), use.names = FALSE)
 
-tdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = TrigramTokenizer))
+tdm <- TermDocumentMatrix(myCorpus[523], control = list(tokenize = BigramTokenizer))
 
-inspect(tdm[1:100,1:10])
-
+inspect(tdm[,])
+inspect(tdm[101:200,1:10])
+9â???"11am
