@@ -12,27 +12,25 @@ close(con)
 myCorpus <- Corpus(VectorSource(twitter[1:1000]))
 rm(twitter)
 
-myCorpus[523]
-inspect(myCorpus[523])
-
-myCorpus <- tm_map(myCorpus, content_transformer(tolower))
-
-
 for(j in seq(myCorpus))   
 {   
-  myCorpus[[j]] <- gsub("@", " ", myCorpus[[j]])   
-  myCorpus[[j]] <- gsub("\\|", " ", myCorpus[[j]])   
+  myCorpus[[j]] <- gsub("[^0-9A-Za-z///' ]", "", myCorpus[[j]])
+  # myCorpus[[j]] <- gsub("[^[:alnum:]///' ]", "", myCorpus[[j]])
 } 
 
-# I have removed the PlainTextDocument transformation.
-# The results are weird and I am not even sure what it does.
 myCorpus <- tm_map(myCorpus, PlainTextDocument)
+myCorpus <- tm_map(myCorpus, content_transformer(tolower))
 
-# Numbers seem to generate many tokens that can be ignored
+# I am not yet sure about how to handle numbers.  Here's why:
+# If I include them, there are lots of additional tokens that may not be mostly noise.
+# If I remove them and intend to have my solution "learn" from the user, I may be discounting their writing style
 # myCorpus <- tm_map(myCorpus, removeNumbers)
+
 myCorpus <- tm_map(myCorpus, removePunctuation)
 myCorpus <- tm_map(myCorpus, stripWhitespace)
 myCorpus = tm_map(myCorpus, removeWords, stopwords("english"))
+# Profanity Filter
+myCorpus = tm_map(myCorpus, removeWords, c("shit","fuck","fucker"))
 
 # I have deliberately chosen not to use stemming
 # myCorpus = tm_map(myCorpus, stemDocument) 
@@ -53,8 +51,13 @@ TrigramTokenizer <-
   function(x)
     unlist(lapply(ngrams(words(x), 3), paste, collapse = " "), use.names = FALSE)
 
-tdm <- TermDocumentMatrix(myCorpus[523], control = list(tokenize = BigramTokenizer))
+unitdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = UnigramTokenizer))
+bitdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = BigramTokenizer))
+tritdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = TrigramTokenizer))
 
-inspect(tdm[,])
-inspect(tdm[101:200,1:10])
-9â???"11am
+inspect(tdm[1:100,1:10])
+
+dim(unitdm)
+dim(bitdm)
+dim(tritdm)
+
