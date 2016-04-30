@@ -1,16 +1,19 @@
 library(stringr)
 library(tm)
+library(slam)
 # library(tau)
 
 setwd("C:/Development/R Projects/Capstone/Dataset")
-setwd("C:/Development/R Projects/Dataset")
+# setwd("C:/Development/R Projects/Dataset")
 
-con <- file("en_US.twitter.txt", encoding='UTF-8')
-# con <- file("en_US.twitter.txt", open='rb')
-twitter <- readLines(con)
+con <- file("en_US.blogs.txt", encoding='UTF-8')
+# con <- file("en_US.twitter.txt", encoding='UTF-8')
+# con <- file("en_US.news.txt", encoding='UTF-8')
+textSource <- readLines(con)
 close(con)
-myCorpus <- Corpus(VectorSource(twitter[1:1000]))
-rm(twitter)
+myCorpus <- Corpus(VectorSource(textSource[1:100000]))
+rm(textSource)
+rm(con)
 
 for(j in seq(myCorpus))   
 {   
@@ -55,9 +58,24 @@ unitdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = UnigramTokenize
 bitdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = BigramTokenizer))
 tritdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = TrigramTokenizer))
 
-inspect(tdm[1:100,1:10])
+# inspect(tdm[1:100,1:10])
 
 dim(unitdm)
 dim(bitdm)
 dim(tritdm)
 
+unitdmcount <- slam::row_sums(unitdm, na.rm = T)
+unitdmMatrix <- as.matrix(unitdmcount)
+write.csv(unitdmMatrix, 'blogs100kunigram.csv')
+
+inspect(unitdm)
+inspect(bitdm)
+inspect(tritdm)
+head(unittdmcount)
+
+rm(unitdm)
+rm(bitdm)
+rm(tritdm)
+rm(myCorpus)
+rm(unittdmcount)
+rm(unitdmMatrix)
