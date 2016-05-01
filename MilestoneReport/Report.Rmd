@@ -30,93 +30,53 @@ Twitter
 31,062,690 words
 2,360,149 lines
 
-### Including Plots
+While all three sources are similar in the number of words, you will see in the following plot that the raw text translates to processed tokens in very different ways.
 
-Has the data scientist made basic plots, such as histograms to illustrate features of the data?
-
-Before I started processing the raw data, I used sampling to divide the data into training, test and validation sets. Much of my 
-
-Start slapping in the 1000/5000/10000/50000/100000 counts
 
 ```{r sampleanalysis, echo=FALSE}
 library(ggplot2)
-myCorpusData <- data.frame(source=character(0), lineCount=integer(0), nGram= character(0), count= integer(0), stringsAsFactors = FALSE)
+myCorpusData <- data.frame(source=character(0), lineCount=integer(0), nGram= character(0), count= integer(0))
 newrow1000 = cbind("Twitter", 1000, "Unigram", 3326)
 newrow5000 = cbind("Twitter", 5000, "Unigram", 9917)
 newrow10000 = cbind("Twitter", 10000, "Unigram", 15607)
 newrow50000 = cbind("Twitter", 50000, "Unigram", 42514)
-newrow100000 = cbind("Twitter", 100000, "Unigram", 65520)
+newrow100000 = cbind("Twitter", "100000", "Unigram", 65520)
 myCorpusData <- rbind(myCorpusData,newrow1000,newrow5000,newrow10000,newrow50000,newrow100000)
-newrow1000 = cbind("Twitter", 1000, "Bigram", 6316)
-newrow5000 = cbind("Twitter", 5000, "Bigram", 29679)
-newrow10000 = cbind("Twitter", 10000, "Bigram", 57363)
-newrow50000 = cbind("Twitter", 50000, "Bigram", 254469)
-newrow100000 = cbind("Twitter", 100000, "Bigram", 472413)
-myCorpusData <- rbind(myCorpusData,newrow1000,newrow5000,newrow10000,newrow50000,newrow100000)
-newrow1000 = cbind("Twitter", 1000, "Trigram", 5523)
-newrow5000 = cbind("Twitter", 5000, "Trigram", 27266)
-newrow10000 = cbind("Twitter", 10000, "Trigram", 54416)
-newrow50000 = cbind("Twitter", 50000, "Trigram", 270274)
-newrow100000 = cbind("Twitter", 100000, "Trigram", 535322)
-myCorpusData <- rbind(myCorpusData,newrow1000,newrow5000,newrow10000,newrow50000,newrow100000)
+
 newrow1000 = cbind("News", 1000, "Unigram", 7897)
 newrow5000 = cbind("News", 5000, "Unigram", 22026)
 newrow10000 = cbind("News", 10000, "Unigram", 32454)
 newrow50000 = cbind("News", 50000, "Unigram", 76906)
-newrow100000 = cbind("News", 100000, "Unigram", 96481)
+newrow100000 = cbind("News", "100000", "Unigram", 96481)
 myCorpusData <- rbind(myCorpusData,newrow1000,newrow5000,newrow10000,newrow50000,newrow100000)
-newrow1000 = cbind("News", 1000, "Bigram", 18321)
-newrow5000 = cbind("News", 5000, "Bigram", 89441)
-newrow10000 = cbind("News", 10000, "Bigram", 173144)
-newrow50000 = cbind("News", 50000, "Bigram", 757572)
-newrow100000 = cbind("News", 100000, "Bigram", 1115641)
-myCorpusData <- rbind(myCorpusData,newrow1000,newrow5000,newrow10000,newrow50000,newrow100000)
-newrow1000 = cbind("News", 1000, "Trigram", 17908)
-newrow5000 = cbind("News", 5000, "Trigram", 91261)
-newrow10000 = cbind("News", 10000, "Trigram", 182579)
-newrow50000 = cbind("News", 50000, "Trigram", 894034)
-newrow100000 = cbind("News", 100000, "Trigram", 1372243)
-myCorpusData <- rbind(myCorpusData,newrow1000,newrow5000,newrow10000,newrow50000,newrow100000)
+
 newrow1000 = cbind("Blogs", 1000, "Unigram", 7895)
 newrow5000 = cbind("Blogs", 5000, "Unigram", 21641)
 newrow10000 = cbind("Blogs", 10000, "Unigram", 32012)
 newrow50000 = cbind("Blogs", 50000, "Unigram", 79076)
-newrow100000 = cbind("Blogs", 100000, "Unigram", 117053)
-myCorpusData <- rbind(myCorpusData,newrow1000,newrow5000,newrow10000,newrow50000,newrow100000)
-newrow1000 = cbind("Blogs", 1000, "Bigram", 20267)
-newrow5000 = cbind("Blogs", 5000, "Bigram", 95517)
-newrow10000 = cbind("Blogs", 10000, "Bigram", 184202)
-newrow50000 = cbind("Blogs", 50000, "Bigram", 812890)
-newrow100000 = cbind("Blogs", 100000, "Bigram", 1503204)
-myCorpusData <- rbind(myCorpusData,newrow1000,newrow5000,newrow10000,newrow50000,newrow100000)
-newrow1000 = cbind("Blogs", 1000, "Trigram", 20015)
-newrow5000 = cbind("Blogs", 5000, "Trigram", 98702)
-newrow10000 = cbind("Blogs", 10000, "Trigram", 196419)
-newrow50000 = cbind("Blogs", 50000, "Trigram", 976388)
-newrow100000 = cbind("Blogs", 100000, "Trigram", 1939260)
+newrow100000 = cbind("Blogs", "100000", "Unigram", 117053)
 myCorpusData <- rbind(myCorpusData,newrow1000,newrow5000,newrow10000,newrow50000,newrow100000)
 
-colnames(myCorpusData) <- c("Source", "Sample Size", "nGram", "Token Count")
+myCorpusData$V4 <- as.numeric(as.character(myCorpusData$V4))
 
 
-ggplot(myCorpusData, aes(x="Sample Size", y="Token Count", fill="Source", alpha="nGram")) +
-  geom_bar(stat="identity", width=0.5)
-
-ggplot(myCorpusData, aes(x="Sample Size", y="Token Count"), fill="Source") +
-  geom_bar(stat="identity", width=0.5)
-
-
-group=interaction(treatment, replicate)
+ggplot(data=myCorpusData, aes(x=V2, y=V4, fill=V1)) +
+    geom_bar(colour="black", stat="identity", position=position_dodge()) +
+   # guides(fill=FALSE) +
+    xlab("Sample Size") + ylab("Tokens") +
+    ggtitle("Tokens per Sample Size and Source") +
+    scale_shape_discrete(name="Experimental") +
+    guides(fill=guide_legend(title=NULL))
 
 ```
 
-What did I do to process the data?
+The results above indicate that when the lines are increased, the number of tokens found in each source varies greatly.  It is not surprising that tweets, with a small fixed maximum size, produced far fewer tokens as I processed larger sets of data.
 
-Numbers
-lowercase
+The plot represents unigram tokens.  I found that the differences found in bigrams and trigrams was even more pronounced.
 
 ### Prediction Algorithm
 
 I have not finalized the method that I am going to be using for my prediction algorithm.  I am leaning toward a method of weighting the prediction almost solely on frequency counts of the nGrams. 
 
 Now that I am comfortable that my corpus processing algorithm is working in the way that I want, I will be spending the next two days studying methods for prediction, smoothing and the evaluation of the results.  It is my intention to have a working prediction program shortly.
+
