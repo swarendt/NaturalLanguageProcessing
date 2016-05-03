@@ -1,17 +1,16 @@
 library(stringr)
 library(tm)
 library(slam)
-# library(tau)
 
-# setwd("C:/Development/R Projects/Capstone/Dataset")
-setwd("C:/Development/R Projects/Dataset")
+setwd("C:/Development/R Projects/Capstone/Dataset")
+# setwd("C:/Development/R Projects/Dataset")
 
 # con <- file("en_US.blogs.txt", encoding='UTF-8')
 con <- file("en_US.twitter.txt", encoding='UTF-8')
 # con <- file("en_US.news.txt", encoding='UTF-8')
 textSource <- readLines(con)
 close(con)
-myCorpus <- Corpus(VectorSource(textSource[1:1000]))
+myCorpus <- Corpus(VectorSource(textSource[1:50000]))
 rm(textSource)
 rm(con)
 
@@ -31,7 +30,10 @@ myCorpus <- tm_map(myCorpus, stripWhitespace)
 # myCorpus = tm_map(myCorpus, removeWords, stopwords("english"))
 
 # Profanity Filter
-myCorpus = tm_map(myCorpus, removeWords, c("shit","fuck","fucker","ass","asshole"))
+profanity <- readLines("ProfanityFilter.txt")
+myCorpus <- tm_map(myCorpus, removeWords, profanity) 
+#myCorpus = tm_map(myCorpus, removeWords, c("shit","fuck","fucker","ass","asshole"))
+rm(profanity)
 
 # I have deliberately chosen not to use stemming
 # myCorpus = tm_map(myCorpus, stemDocument) 
@@ -49,36 +51,32 @@ TrigramTokenizer <-
     unlist(lapply(ngrams(words(x), 3), paste, collapse = " "), use.names = FALSE)
 
 unitdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = UnigramTokenizer))
-bitdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = BigramTokenizer))
-tritdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = TrigramTokenizer))
-
-# inspect(tdm[1:100,1:10])
-
 dim(unitdm)
-dim(bitdm)
-dim(tritdm)
-
 unitdmcount <- slam::row_sums(unitdm, na.rm = T)
 unitdmMatrix <- as.matrix(unitdmcount)
-write.csv(unitdmMatrix, 'blogs100kunigram.csv')
-
-bitdmcount <- slam::row_sums(bitdm, na.rm = T)
-bitdmMatrix <- as.matrix(bitdmcount)
-write.csv(bitdmMatrix, 'blogs100kbigram.csv')
-
-tritdmcount <- slam::row_sums(tritdm, na.rm = T)
-tritdmMatrix <- as.matrix(tritdmcount)
-write.csv(tritdmMatrix, 'blogs100ktrigram.csv')
-
-
-inspect(unitdm)
-inspect(bitdm)
-inspect(tritdm)
-head(unitdmcount)
-
+write.csv(unitdmMatrix, 'twitter50000unigram.csv')
 rm(unitdm)
-rm(bitdm)
-rm(tritdm)
-rm(myCorpus)
 rm(unitdmcount)
 rm(unitdmMatrix)
+
+
+bitdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = BigramTokenizer))
+dim(bitdm)
+bitdmcount <- slam::row_sums(bitdm, na.rm = T)
+bitdmMatrix <- as.matrix(bitdmcount)
+write.csv(bitdmMatrix, 'twitter50000bigram.csv')
+rm(bitdm)
+rm(bitdmcount)
+rm(bitdmMatrix)
+
+
+tritdm <- TermDocumentMatrix(myCorpus, control = list(tokenize = TrigramTokenizer))
+dim(tritdm)
+tritdmcount <- slam::row_sums(tritdm, na.rm = T)
+tritdmMatrix <- as.matrix(tritdmcount)
+write.csv(tritdmMatrix, 'twitter50000trigram.csv')
+rm(tritdm)
+rm(tritdmcount)
+rm(tritdmMatrix)
+
+rm(myCorpus)
