@@ -24,6 +24,17 @@ http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&3-notes12.pdf
 
 Use week 3 of NLP classs  
 
+### The prediction algorithm
+
+I am still tweaking the algorithm but the basis is this:
+
+Given a bigram, see if we have a trigram that begins with that bigram. If so, then the last word in the trigram is used as our prediction.
+
+If the bigram is not found in our trigram data, then use the last word in the bigram and see if it is in our bigram data.  If so, we have a prediction.
+
+Finally, and this is just random guessing, grab a random popular word from our unigrams.
+
+
 ### Determining a method for prediction
 
 After playing with Naive Bayes and doing some research, I have decided to choose an algorithm
@@ -63,5 +74,8 @@ tm_map(myCorpus, stripWhitespace)
 tm_map(myCorpus, content_transformer(tolower))
 tm_map(myCorpus, removeWords, stopwords("english"))
 tm_map(myCorpus, stemDocument)
+
+Update on May 17 - I am finding that keeping numbers in my corpus leads to really silly results
+in my predictor.  I am now going to remove them.
 
 However, I soon discover that the "standard method" of dealing with text does not apply to our goals.  Stemming and removing the stop words will adversely impact our results.

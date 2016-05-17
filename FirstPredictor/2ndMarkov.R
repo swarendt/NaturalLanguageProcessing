@@ -57,8 +57,7 @@ predictTrigram <- function(inputText) {
 }
 
 inputText <- "small business"
-
 inputText <- "superf Lousy"
-
 inputText <- "Arendt credited"
+
 predictTrigram(inputText)
