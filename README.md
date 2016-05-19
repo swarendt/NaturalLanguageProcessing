@@ -9,22 +9,37 @@ Repository containing all of my code for the JHU Natural Language Processing Pro
 
 ### Next steps
 
-Create a function that uses a 2nd Order Markov Chain
-Determine how to fail to a 1st Order Markov Chain if bigram not found
-Determine whether to predict on a unigram (seems that just picking a frequent word isn't that
-helpful)
 Determine how to handle OOV
-
 Does smoothing apply to OOV?
+
+Start developing the Shiny App
 
 Do I need to provide some probability calculation with the predicted word?
 
+Document resources at the end of this md
+
 MIT Lecture on nGrams and models that is helpful in understanding the requirements
 http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&3-notes12.pdf
-
 Use week 3 of NLP classs  
 
-### The prediction algorithm
+Start thinking about the contents of slides for RPubs
+
+### Week 7 - Create and publish Shiny App - May 30 2016
+
+### Week 6 - Create and publish Shiny App - May 23 2016
+
+### Week 5 - Improving and testing the prediction algorithm - May 16 2016
+
+This week I discovered that including numbers in my term document matrix led to some really strange results for my prediction algorithm.  I went back to my data cleaning and removed numbers.  I had originally thought keeping the numbers would make for a more robust prediction corpus but the result generated some strange sentences.
+
+When I first designed my prediction algorithm, I had it in my head that the input would always be a bigram.  In reality, the input could be a unigram, trigram or larger.  My algorithm was incorrectly failing a trigram down to the unigram prediction and I ended up with sentences that generated an endless loop.  "of the first time of the first time"
+
+I have converted my lookup data into R objects now and should easily be able to upload them within the constraints of the Shiny app server.  I am going to have to remember to include the stringr package in my Shiny app.
+
+
+### Week 4 - The prediction algorithm - May 9 2016
+
+The word function in the stringr package has been very helpful in implementing my algorithm.
 
 I am still tweaking the algorithm but the basis is this:
 
@@ -34,8 +49,7 @@ If the bigram is not found in our trigram data, then use the last word in the bi
 
 Finally, and this is just random guessing, grab a random popular word from our unigrams.
 
-
-### Determining a method for prediction
+### Week 3 - Determining a method for prediction - May 2 2016
 
 After playing with Naive Bayes and doing some research, I have decided to choose an algorithm
 that has nothing to do with Machine Learning.  At this point, I have data with unigrams, bigrams and trigrams that has been gleaned from a large sample of the text data.
@@ -49,7 +63,7 @@ just access the database for a match and sort by occurrences.
 It turns out that Arendt's Brute Force Predictor goes by another name, Second
 Order Markov Chain.  It is an implementation of this that I will be using in my predictions.
 
-### Milestone Report
+### Week 2 - Milestone Report - April 25 2016
 
 The processing of the raw datasets is now complete.  I convert the raw data into a tdm that contains the data that seems to be what I want.  But what do I do with a tdm.
 
@@ -57,7 +71,7 @@ I have discovered the "slam" function that will sum up counts that I can then wr
 
 Sampling these massive data sets of text is difficult.  I chose to select arbitrary chunks of the raw data and save the results.  I then read the chunks into SQL Server and merged the data.  It would be stupid for me to spend lots of time figuring out how to do it in R when I quickly got the results in SQL Server.
 
-### Cleaning and Processing Data
+### Week 1 - Cleaning and Processing Data - April 18 2016
 
 Wow, what an overwhelming task.  I have 7-ish weeks to complete this project and it turns out the reference material is a 8 week course on Natural Language Processing.
 

@@ -14,24 +14,35 @@
 # It turns out that Arendt's Brute Force Predictor goes by another name, Second
 # Order Markov Chain.  
 
-library(tau)
+# library(tau)
 library(stringr)
 
 #setwd("C:/Development/R Projects/Capstone/Dataset")
 setwd("C:/Development/R Projects/Dataset")
 
-myData = read.csv("TrigramSplitTrain.csv")  # read csv file 
-# dim(mydata)
-submyTrigrams <- subset.data.frame(myData, FrequencyCount > 3)
+#  This code was used originally to read in the csv file, but need more efficient 
+#  storage for the Shiny app.
+#  myData = read.csv("TrigramSplitTrain.csv")  # read csv file 
+#  submyTrigrams <- subset.data.frame(myData, FrequencyCount > 1)
+#  
+#  myData = read.csv("BigramSplitTrain.csv")  # read csv file 
+#  submyBigrams <- subset.data.frame(myData, FrequencyCount > 0)
+#  rm(myData)
 
-myData = read.csv("BigramSplitTrain.csv")  # read csv file 
-submyBigrams <- subset.data.frame(myData, FrequencyCount > 3)
-rm(myData)
+submyTrigrams <- readRDS("trigrams.rds")
+submyBigrams  <- readRDS("bigrams.rds")
 
 # This function will return the most popular word for a trigram, given an input of a bigram
 predictTrigram <- function(inputText) {
 
   inputText <- tolower(inputText)
+  
+  # This little test checks to see if incoming text is more than one word.  If so, it will 
+  # change the input text to the last bigram.  Otherwise, it uses the last unigram.
+  if (inputText != word(inputText, -1))
+  {
+    inputText <- word(inputText, -2, -1)
+  }
 
   # Check Trigram data frame for suggestion
   trigrams <- submyTrigrams[submyTrigrams$Bigram==inputText,]
@@ -58,6 +69,21 @@ predictTrigram <- function(inputText) {
 
 inputText <- "small business"
 inputText <- "superf Lousy"
-inputText <- "Arendt credited"
-
+inputText <- "Arendt credited with the blah blah"
 predictTrigram(inputText)
+
+saveRDS(submyTrigrams, "trigrams.rds")
+saveRDS(submyBigrams, "bigrams.rds")
+
+inputText <- word(inputText,-2)
+inputText <- word(inputText,-1)
+inputText <- word(inputText,-1)
+
+
+
+inputText <- "Arendt credited with the"
+
+
+
+
+
