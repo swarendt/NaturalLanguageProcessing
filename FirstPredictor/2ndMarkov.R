@@ -14,7 +14,6 @@
 # It turns out that Arendt's Brute Force Predictor goes by another name, Second
 # Order Markov Chain.  
 
-# library(tau)
 library(stringr)
 
 #setwd("C:/Development/R Projects/Capstone/Dataset")
