@@ -1,4 +1,8 @@
 
+# Read in the data here?
+submyTrigrams <- readRDS("data/trigrams.rds")
+submyBigrams  <- readRDS("data/bigrams.rds")
+
 
 # Calculates the ABV of the beer based on the specific gravities of the brewing process
 abvValue <- function(og, fg) {
@@ -42,5 +46,7 @@ predictNextWord <- function(inputText) {
   if (is.na(res)) {
     res <- "oov"
   }
+  
+  return(res)
 }
   

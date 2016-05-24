@@ -1,7 +1,7 @@
 library(shiny)
 
 shinyUI(fluidPage(
-  titlePanel("aleChecker"),
+  titlePanel("wordPrognosticator"),
   
   sidebarLayout(
     sidebarPanel(
@@ -32,9 +32,6 @@ shinyUI(fluidPage(
       br(),
       br(),
       
-      numericInput("ibu", "IBU:", 25,
-                   min = 1, max = 100),
-      
       textInput("ti", "Enter your text here:", "")
     ),
     
@@ -42,13 +39,9 @@ shinyUI(fluidPage(
     (
       textOutput("abv"),
       
-      textOutput("ibu"),
-
-      ## Emoticons courtesy of http://www.freepik.com/
-      conditionalPanel("input.ibu < 21", img(src='Emoticon1.jpg', align = "center")),
-      conditionalPanel("input.ibu > 20 && input.ibu < 41", img(src='Emoticon2.jpg', align = "center")),
-      ## conditionalPanel("input.ibu < 60", img(src='Emoticon3.jpg', align = "center")),
-      conditionalPanel("input.ibu > 60", img(src='Emoticon4.jpg', align = "center"))
+      textOutput("nxtWord"),
+      
+      conditionalPanel("input.ibu < 21", img(src='Emoticon1.jpg', align = "center"))
       
     )
   )

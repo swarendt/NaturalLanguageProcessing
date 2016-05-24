@@ -12,9 +12,11 @@ shinyServer(function(input, output) {
           ,'%'
         )
   })
+
   
-  output$ibu <- renderText({ 
-      paste("An IBU of ", input$ibu, 'makes me')
+  output$nxtWord <- renderText({ 
+    paste("Predicted Next word: "
+          , predictNextWord(input$ti))
   })
   
 

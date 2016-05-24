@@ -27,6 +27,9 @@ setwd("C:/Development/R Projects/Dataset")
 #  myData = read.csv("BigramSplitTrain.csv")  # read csv file 
 #  submyBigrams <- subset.data.frame(myData, FrequencyCount > 0)
 #  rm(myData)
+#  saveRDS(submyTrigrams, "trigrams.rds")
+#  saveRDS(submyBigrams, "bigrams.rds")
+
 
 submyTrigrams <- readRDS("trigrams.rds")
 submyBigrams  <- readRDS("bigrams.rds")
