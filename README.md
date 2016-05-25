@@ -22,11 +22,36 @@ MIT Lecture on nGrams and models that is helpful in understanding the requiremen
 http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&3-notes12.pdf
 Use week 3 of NLP classs  
 
-Start thinking about the contents of slides for RPubs
+### Conclusions
+
+First, this is a project that could be massive in scope.  As someone with a full time job and lots of obligations, there is no way I can do this assignment justice, even though I can meet the requirements of the task.  There are so many things that I could improve if only I had the time.
+
+Second, this was an interesting project.  I had never thought about what it takes to determine the steps in Natural Language Processing.  It is a subject that, obviuously, people spend a lot of time analyzing.
+
+#### What would I do if someone gave me a grant to work on this for the next year?
+
+* Improve my Corpus processing.  Working under limitations of size, I took only the most popular trigrams.  There is no reason
+* Spend time on data storage efficiencies and R code best practices.  My Shiny app is fairly responsive but could easily be improved upon.
+* Learn more about natural language processing.
+* Apply some sort of Part of Speech weighting to my predictions.  While frequencies of nGram occurrence do this to some degree, it is not sufficient in my mind.
+* Apply a dictionary to my Corpus processing.  Twitter adds a lot of nonsense words to the dataset that probably should be filtered out.  Those nonsense words may not show up to the user, but take up a lot of room in my dataset.
+* A solid evaluation of whether a Markov Chain is the best way to perform the prediction.  It was easy to understand and quick to implement, but there are other options that should be evaluated.
+* Much more, these are just quick ideas on improvements.
+
 
 ### Week 7 - Create and publish Shiny App - May 30 2016
 
 ### Week 6 - Create and publish Shiny App - May 23 2016
+
+I have a working shiny app and now am able to do some end user testing.  In general, the app works well but I have found some usability issues that can stand some improving.  
+
+For instance, if a space is added to the input text, then immediately the app returns and OOV result.   The OOV is an expected result, because my bigrams and unigrams do not have leading/trailing space. Fortunately, stringr has a trim space function to manage this.
+
+I have to decide how to handle the OOV cases.  Do I have some clever trick up my sleeve?  Do I suggest just the most popular words?  
+
+I also have plenty of time to do UI improvements.  Not my strong suit, but I really want to utilize tabs to add a help file and description.  Maybe an about tab too.
+
+My goal is to have an app loaded to the Shiny host before the week is up.  Giving me a chance to make tweaks if necessary.
 
 ### Week 5 - Improving and testing the prediction algorithm - May 16 2016
 
@@ -93,3 +118,9 @@ Update on May 17 - I am finding that keeping numbers in my corpus leads to reall
 in my predictor.  I am now going to remove them.
 
 However, I soon discover that the "standard method" of dealing with text does not apply to our goals.  Stemming and removing the stop words will adversely impact our results.
+
+
+### Resources
+
+http://www.wordfrequency.info/free.asp?s=y
+Contains a list of the most frequently used English words.  Used in my OOV predictions.

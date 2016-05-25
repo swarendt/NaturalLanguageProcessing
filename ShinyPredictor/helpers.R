@@ -2,15 +2,8 @@
 # Read in the data here?
 submyTrigrams <- readRDS("data/trigrams.rds")
 submyBigrams  <- readRDS("data/bigrams.rds")
+frequentWords <- readRDS("data/freqwords.rds")
 
-
-# Calculates the ABV of the beer based on the specific gravities of the brewing process
-abvValue <- function(og, fg) {
-
-    abvFinal <- (og - fg) * 131;
-    return(abvFinal)
-
-}
 
 # This function requires the input of a phrase to predict a next word.
 # It uses a Second Order Markov Chain for the prediction.  That is, it only relies on the last two
@@ -20,6 +13,7 @@ abvValue <- function(og, fg) {
 # which needs to be handled in the UI.
 
 predictNextWord <- function(inputText) {
+  inputText <- str_trim(inputText, side = "both")
   
   inputText <- tolower(inputText)
   
