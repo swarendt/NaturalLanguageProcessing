@@ -20,7 +20,7 @@ shinyUI(fluidPage(
       
       textOutput("nxtWord"),
       
-      conditionalPanel("input.ibu < 21", img(src='Emoticon1.jpg', align = "center"))
+      conditionalPanel(oovResult > 0, oovResult)
       
     )
   )

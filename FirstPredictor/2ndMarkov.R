@@ -74,18 +74,8 @@ inputText <- "superf Lousy"
 inputText <- "Arendt credited with the blah blah"
 predictTrigram(inputText)
 
-saveRDS(submyTrigrams, "trigrams.rds")
-saveRDS(submyBigrams, "bigrams.rds")
-
-inputText <- word(inputText,-2)
-inputText <- word(inputText,-1)
-inputText <- word(inputText,-1)
-
-
-
-inputText <- "Arendt credited with the"
-
-
-
-
-
+#  This code was used originally to read in the csv file, but need more efficient 
+#  storage for the Shiny app.
+  
+myData = read.csv("FrequentWords.csv")  # read csv file 
+saveRDS(myData, "frequentWords.rds")

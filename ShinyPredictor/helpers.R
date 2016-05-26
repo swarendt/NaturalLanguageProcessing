@@ -3,7 +3,14 @@
 submyTrigrams <- readRDS("data/trigrams.rds")
 submyBigrams  <- readRDS("data/bigrams.rds")
 frequentWords <- readRDS("data/freqwords.rds")
+oovResult <- 0
 
+foo <- 12
+bar <- c("a", "b", "e")
+newList <- list("integer" = foo, "names" = bar)
+Then return this list.
+After calling your function, you can then access each of these with newList$integer or newList$names.
+Other object types m
 
 # This function requires the input of a phrase to predict a next word.
 # It uses a Second Order Markov Chain for the prediction.  That is, it only relies on the last two
@@ -13,6 +20,7 @@ frequentWords <- readRDS("data/freqwords.rds")
 # which needs to be handled in the UI.
 
 predictNextWord <- function(inputText) {
+  oovResult <- 0
   inputText <- str_trim(inputText, side = "both")
   
   inputText <- tolower(inputText)
@@ -39,8 +47,10 @@ predictNextWord <- function(inputText) {
   
   if (is.na(res)) {
     res <- "oov"
+    oovResult <- sample(1:25, 1)
   }
   
+  res 
   return(res)
 }
   
