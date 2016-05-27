@@ -16,11 +16,10 @@ shinyUI(fluidPage(
     
     mainPanel
     (
-      textOutput("abv"),
-      
+  
       textOutput("nxtWord"),
-      
-      conditionalPanel(oovResult > 0, oovResult)
+            
+      conditionalPanel(oovResult > 0, "Not in the vocabulary")
       
     )
   )
