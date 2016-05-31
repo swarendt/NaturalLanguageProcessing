@@ -3,7 +3,7 @@
 submyTrigrams <- readRDS("data/trigrams.rds")
 submyBigrams  <- readRDS("data/bigrams.rds")
 frequentWords <- readRDS("data/freqwords.rds")
-oovResult <- 0
+oovResult <<- 0
 
 
 # After calling your function, you can then access each of these with resList$integer or resList$names.
@@ -17,8 +17,8 @@ oovResult <- 0
 
 predictNextWord <- function(inputText) {
 
+
   inputText <- str_trim(inputText, side = "both")
-  
   inputText <- tolower(inputText)
   
   # This little test checks to see if incoming text is more than one word.  If so, it will 
@@ -27,6 +27,7 @@ predictNextWord <- function(inputText) {
   {
     inputText <- word(inputText, -2, -1)
   }
+  oovResult <<- 0
   
   # Check Trigram data frame for suggestion
   trigrams <- submyTrigrams[submyTrigrams$Bigram==inputText,]
@@ -42,12 +43,9 @@ predictNextWord <- function(inputText) {
   }
   
   if (is.na(res)) {
-    res <- "oov"
-    oovResult <- sample(1:25, 1)
+    oovResult <<- sample(1:25, 1)
     res <- as.character(frequentWords[oovResult,2])
-  } else {
-    oovResult <- 0
-  }
+  } 
   
   return(res)
 }

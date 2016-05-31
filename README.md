@@ -24,7 +24,7 @@ Use week 3 of NLP classs
 
 ### Conclusions
 
-First, this is a project that could be massive in scope.  As someone with a full time job and lots of obligations, there is no way I can do this assignment justice, even though I can meet the requirements of the task.  There are so many things that I could improve if only I had the time.
+First, this is a project that could be massive in scope.  As someone with a full time job and lots of obligations, there is no way I can do this assignment justice.  Even though I met the requirements of the task, there are so many things that I could improve if only I had the time.
 
 Second, this was an interesting project.  I had never thought about what it takes to determine the steps in Natural Language Processing.  It is a subject that, obviuously, people spend a lot of time analyzing.
 
@@ -40,6 +40,18 @@ Second, this was an interesting project.  I had never thought about what it take
 
 
 ### Week 7 - Create and publish Shiny App - May 30 2016
+
+Ah, the final week.
+
+Shiny app is up and published, need to put together the presentation.  How do you cram the results of 7 weeks of work (including a 8 week course as reference material) into 5 slides.
+
+I am thinking:
+
+1) A little background
+2) Processing and cleaning the data
+3) SQL "Smoothing"
+4) Algorithm
+5) Something else
 
 ### Week 6 - Create and publish Shiny App - May 23 2016
 

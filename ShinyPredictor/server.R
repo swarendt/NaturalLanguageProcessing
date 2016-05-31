@@ -10,6 +10,4 @@ shinyServer(function(input, output) {
     paste("Predicted Next word: "
           , predictNextWord(input$ti))
   })
-  
-
 })
