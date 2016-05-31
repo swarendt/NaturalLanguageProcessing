@@ -1,0 +1,9 @@
+name: ShinyPredictor
+account: scottarendt
+server: shinyapps.io
+appId: 105633
+bundleId: 467682
+url: https://scottarendt.shinyapps.io/ShinyPredictor/
+when: 1464734579.46066
+asMultiple: FALSE
+asStatic: FALSE
