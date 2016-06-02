@@ -21,9 +21,7 @@ for(j in seq(myCorpus))
 
 myCorpus <- tm_map(myCorpus, PlainTextDocument)
 myCorpus <- tm_map(myCorpus, content_transformer(tolower))
-
-# myCorpus <- tm_map(myCorpus, removeNumbers)
-
+myCorpus <- tm_map(myCorpus, removeNumbers)
 myCorpus <- tm_map(myCorpus, stripWhitespace)
 
 # I have decided not to remove stopwords, it alters the results that I want

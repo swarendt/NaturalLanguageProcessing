@@ -39,7 +39,7 @@ Second, this was an interesting project.  I had never thought about what it take
 * Much more, these are just quick ideas on improvements.
 
 
-### Week 7 - Create and publish Shiny App - May 30 2016
+### Week 7 - Create and publish presentation - May 30 2016
 
 Ah, the final week.
 
@@ -108,6 +108,26 @@ I have discovered the "slam" function that will sum up counts that I can then wr
 
 Sampling these massive data sets of text is difficult.  I chose to select arbitrary chunks of the raw data and save the results.  I then read the chunks into SQL Server and merged the data.  It would be stupid for me to spend lots of time figuring out how to do it in R when I quickly got the results in SQL Server.
 
+Finally, I also utilized my familiarity with SQL Server, along with its processing power, to end up with a dataset that contains only the most popular response to a bigram (along with a similar SQL script for the unigrams).
+
+The code below generates a common table expression from the data that I imported from the R generated csv file. The csv file is the trigrams from R processing, split into a Bigram (the first two words), a NextWord (the last word of the trigram) and Frequency representing the occurrences of a trigram.  It is based on this frequency that I am producing a top suggestion for a bigram.
+
+; WITH cte AS
+  ( SELECT Bigram, NextWord, Frequency,
+           ROW_NUMBER() OVER (PARTITION BY Bigram
+                              ORDER BY Frequency DESC
+                             )
+             AS rn
+    FROM TrigramSplitTrain
+  )
+
+INSERT INTO TrigramSplitTrainTop1
+SELECT Bigram, NextWord, Frequency
+FROM cte
+WHERE rn <= 1
+ORDER BY Bigram, NextWord
+
+
 ### Week 1 - Cleaning and Processing Data - April 18 2016
 
 Wow, what an overwhelming task.  I have 7-ish weeks to complete this project and it turns out the reference material is a 8 week course on Natural Language Processing.
@@ -122,6 +142,7 @@ Jumping in, I start evaluating the tm package and find that there is a common pr
 
 tm_map(myCorpus, PlainTextDocument)
 tm_map(myCorpus, stripWhitespace)
+tm_map(myCorpus, removeNumbers)
 tm_map(myCorpus, content_transformer(tolower))
 tm_map(myCorpus, removeWords, stopwords("english"))
 tm_map(myCorpus, stemDocument)
@@ -136,3 +157,7 @@ However, I soon discover that the "standard method" of dealing with text does no
 
 http://www.wordfrequency.info/free.asp?s=y
 Contains a list of the most frequently used English words.  Used in my OOV predictions.
+
+MIT Lecture on nGrams and models that is helpful in understanding the requirements
+http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&3-notes12.pdf
+Use week 3 of NLP classs  
