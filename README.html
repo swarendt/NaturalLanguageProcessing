@@ -117,18 +117,20 @@ $(document).ready(function () {
 April 22 2016<br />
 Capstone work</p>
 <p>Repository containing all of my code for the JHU Natural Language Processing Project</p>
-<div id="next-steps" class="section level3">
-<h3>Next steps</h3>
-<p>Determine how to handle OOV Does smoothing apply to OOV?</p>
-<p>Start developing the Shiny App</p>
-<p>Do I need to provide some probability calculation with the predicted word?</p>
-<p>Document resources at the end of this md</p>
-<p>MIT Lecture on nGrams and models that is helpful in understanding the requirements <a href="http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&amp;3-notes12.pdf" class="uri">http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&amp;3-notes12.pdf</a> Use week 3 of NLP classs</p>
 </div>
+<div id="repository-contents" class="section level1">
+<h1>Repository Contents</h1>
+<p>Each directory in this repository contains code related to specific steps in the capstone project.</p>
+<p>/CorpusProcessing - This directory has the code for reading in the raw text files, cleaning that data, and finally writing output to csv files. The output contains the bigrams and trigrams that are resulting from processing the raw text.</p>
+<p>/SQLCode - When this directory exists, it will contain the SQL scripts that I used to reduce the data sets to only the most popular results.</p>
+<p>/MilestonePredictor - This project was to meet an initial project requirement. It contains some analysis of the dataset. This is not really important to the final project.</p>
+<p>/FirstPredictor - R files that used to implement and fine tune my prediction algorithm.</p>
+<p>/ShinyPredictor - An implementation of my prediction algorithm into a user interface. This is part 1 of the final project requirements.</p>
+<p>/PredictionPresentation - A 5 slide presentation of my algorithm and application. This is the second part of the final project requirements.</p>
 <div id="conclusions" class="section level3">
 <h3>Conclusions</h3>
-<p>First, this is a project that could be massive in scope. As someone with a full time job and lots of obligations, there is no way I can do this assignment justice. Even though I met the requirements of the task, there are so many things that I could improve if only I had the time.</p>
-<p>Second, this was an interesting project. I had never thought about what it takes to determine the steps in Natural Language Processing. It is a subject that, obviuously, people spend a lot of time analyzing.</p>
+<p>First, this is a project that could be massive in scope. There are so many things that I could improve this project. I think that I have just scratched the surface on it.</p>
+<p>Second, this was an interesting project. I had never thought about what it takes to determine the steps in Natural Language Processing. It is a subject that, obviuously, people spend a lot of time analyzing and I have become interested in it.</p>
 <div id="what-would-i-do-if-someone-gave-me-a-grant-to-work-on-this-for-the-next-year" class="section level4">
 <h4>What would I do if someone gave me a grant to work on this for the next year?</h4>
 <ul>
@@ -142,8 +144,24 @@ Capstone work</p>
 </ul>
 </div>
 </div>
-<div id="week-7---create-and-publish-shiny-app---may-30-2016" class="section level3">
-<h3>Week 7 - Create and publish Shiny App - May 30 2016</h3>
+<div id="after-week-7---post-assignment-documentation---june-2-2016" class="section level3">
+<h3>After Week 7 - Post assignment documentation - June 2 2016</h3>
+<p>Document the details of the project. While I have “a” and “b” and “c” here, I don’t have the details of how to get from one step to another. I also need to get my SQL scripts into the repository.</p>
+<p>Document resources at the end of this md</p>
+<p>MIT Lecture on nGrams and models that is helpful in understanding the requirements <a href="http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&amp;3-notes12.pdf" class="uri">http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&amp;3-notes12.pdf</a> Use week 3 of NLP classs</p>
+</div>
+<div id="week-7---create-and-publish-presentation---may-30-2016" class="section level3">
+<h3>Week 7 - Create and publish presentation - May 30 2016</h3>
+<p>Ah, the final week.</p>
+<p>Shiny app is up and published, need to put together the presentation. How do you cram the results of 7 weeks of work (including a 8 week course as reference material) into 5 slides.</p>
+<p>I am thinking:</p>
+<ol style="list-style-type: decimal">
+<li>A little background</li>
+<li>Processing and cleaning the data</li>
+<li>SQL “Smoothing”</li>
+<li>Algorithm</li>
+<li>Something else</li>
+</ol>
 </div>
 <div id="week-6---create-and-publish-shiny-app---may-23-2016" class="section level3">
 <h3>Week 6 - Create and publish Shiny App - May 23 2016</h3>
@@ -178,6 +196,10 @@ Capstone work</p>
 <p>The processing of the raw datasets is now complete. I convert the raw data into a tdm that contains the data that seems to be what I want. But what do I do with a tdm.</p>
 <p>I have discovered the “slam” function that will sum up counts that I can then write to a text/csv file.</p>
 <p>Sampling these massive data sets of text is difficult. I chose to select arbitrary chunks of the raw data and save the results. I then read the chunks into SQL Server and merged the data. It would be stupid for me to spend lots of time figuring out how to do it in R when I quickly got the results in SQL Server.</p>
+<p>Finally, I also utilized my familiarity with SQL Server, along with its processing power, to end up with a dataset that contains only the most popular response to a bigram (along with a similar SQL script for the unigrams).</p>
+<p>The code below generates a common table expression from the data that I imported from the R generated csv file. The csv file is the trigrams from R processing, split into a Bigram (the first two words), a NextWord (the last word of the trigram) and Frequency representing the occurrences of a trigram. It is based on this frequency that I am producing a top suggestion for a bigram.</p>
+<p>; WITH cte AS ( SELECT Bigram, NextWord, Frequency, ROW_NUMBER() OVER (PARTITION BY Bigram ORDER BY Frequency DESC ) AS rn FROM TrigramSplitTrain )</p>
+<p>INSERT INTO TrigramSplitTrainTop1 SELECT Bigram, NextWord, Frequency FROM cte WHERE rn &lt;= 1 ORDER BY Bigram, NextWord</p>
 </div>
 <div id="week-1---cleaning-and-processing-data---april-18-2016" class="section level3">
 <h3>Week 1 - Cleaning and Processing Data - April 18 2016</h3>
@@ -186,13 +208,14 @@ Capstone work</p>
 <p>It also means that I need to dive into new R objects (Corpus, Term Document Matrix) AND new R packages (tm primarily at this point).</p>
 <p>Arrghh. A data science project requires you to be an expert in the subject OR the technology OR statistics. I am a newbie in all three. Well, I kind of have the technology down but am unfamiliar with the this package.</p>
 <p>Jumping in, I start evaluating the tm package and find that there is a common process to interpreting raw data represent English text.</p>
-<p>tm_map(myCorpus, PlainTextDocument) tm_map(myCorpus, stripWhitespace) tm_map(myCorpus, content_transformer(tolower)) tm_map(myCorpus, removeWords, stopwords(“english”)) tm_map(myCorpus, stemDocument)</p>
+<p>tm_map(myCorpus, PlainTextDocument) tm_map(myCorpus, stripWhitespace) tm_map(myCorpus, removeNumbers) tm_map(myCorpus, content_transformer(tolower)) tm_map(myCorpus, removeWords, stopwords(“english”)) tm_map(myCorpus, stemDocument)</p>
 <p>Update on May 17 - I am finding that keeping numbers in my corpus leads to really silly results in my predictor. I am now going to remove them.</p>
 <p>However, I soon discover that the “standard method” of dealing with text does not apply to our goals. Stemming and removing the stop words will adversely impact our results.</p>
 </div>
 <div id="resources" class="section level3">
 <h3>Resources</h3>
 <p><a href="http://www.wordfrequency.info/free.asp?s=y" class="uri">http://www.wordfrequency.info/free.asp?s=y</a> Contains a list of the most frequently used English words. Used in my OOV predictions.</p>
+<p>MIT Lecture on nGrams and models that is helpful in understanding the requirements <a href="http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&amp;3-notes12.pdf" class="uri">http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&amp;3-notes12.pdf</a> Use week 3 of NLP classs</p>
 </div>
 </div>
 

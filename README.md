@@ -7,26 +7,27 @@ Capstone work
 
 Repository containing all of my code for the JHU Natural Language Processing Project
 
-### Next steps
+# Repository Contents
 
-Determine how to handle OOV
-Does smoothing apply to OOV?
+Each directory in this repository contains code related to specific steps in the capstone project.
 
-Start developing the Shiny App
+/CorpusProcessing - This directory has the code for reading in the raw text files, cleaning that data, and finally writing output to csv files.  The output contains the bigrams and trigrams that are resulting from processing the raw text.
 
-Do I need to provide some probability calculation with the predicted word?
+/SQLCode - When this directory exists, it will contain the SQL scripts that I used to reduce the data sets to only the most popular results.
 
-Document resources at the end of this md
+/MilestonePredictor - This project was to meet an initial project requirement.  It contains some analysis of the dataset.  This is not really important to the final project.
 
-MIT Lecture on nGrams and models that is helpful in understanding the requirements
-http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&3-notes12.pdf
-Use week 3 of NLP classs  
+/FirstPredictor - R files that used to implement and fine tune my prediction algorithm.
+
+/ShinyPredictor - An implementation of my prediction algorithm into a user interface.  This is part 1 of the final project requirements.
+
+/PredictionPresentation - A 5 slide presentation of my algorithm and application.  This is the second part of the final project requirements.
 
 ### Conclusions
 
-First, this is a project that could be massive in scope.  As someone with a full time job and lots of obligations, there is no way I can do this assignment justice.  Even though I met the requirements of the task, there are so many things that I could improve if only I had the time.
+First, this is a project that could be massive in scope.  There are so many things that I could improve this project.  I think that I have just scratched the surface on it.
 
-Second, this was an interesting project.  I had never thought about what it takes to determine the steps in Natural Language Processing.  It is a subject that, obviuously, people spend a lot of time analyzing.
+Second, this was an interesting project.  I had never thought about what it takes to determine the steps in Natural Language Processing.  It is a subject that, obviuously, people spend a lot of time analyzing and I have become interested in it.
 
 #### What would I do if someone gave me a grant to work on this for the next year?
 
@@ -37,6 +38,16 @@ Second, this was an interesting project.  I had never thought about what it take
 * Apply a dictionary to my Corpus processing.  Twitter adds a lot of nonsense words to the dataset that probably should be filtered out.  Those nonsense words may not show up to the user, but take up a lot of room in my dataset.
 * A solid evaluation of whether a Markov Chain is the best way to perform the prediction.  It was easy to understand and quick to implement, but there are other options that should be evaluated.
 * Much more, these are just quick ideas on improvements.
+
+### After Week 7 - Post assignment documentation - June 2 2016
+
+Document the details of the project.  While I have "a" and "b" and "c" here, I don't have the details of how to get from one step to another.  I also need to get my SQL scripts into the repository.
+
+Document resources at the end of this md
+
+MIT Lecture on nGrams and models that is helpful in understanding the requirements
+http://web.mit.edu/6.863/www/fall2012/lectures/lecture2&3-notes12.pdf
+Use week 3 of NLP classs  
 
 
 ### Week 7 - Create and publish presentation - May 30 2016

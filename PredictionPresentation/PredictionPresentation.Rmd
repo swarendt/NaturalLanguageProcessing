@@ -1,13 +1,14 @@
-ShinyPredictor - A language prediction application!
-========================================================
-author: Scott Arendt
-date: May 31, 2016
-autosize: true
-transition: fade
+---
+title: "Prediction Presentation"
+author: "Scott Arendt"
+date: "May 31, 2016"
+output: ioslides_presentation
+---
 
-
-Building a Vocabulary
-========================================================
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Building a Vocabulary {.smaller}
 The first step in this project is to reduce the Corpus of text down to a series of nGrams.  A nGram is a word phrase of length "n".  I limited my processing to unigrams, bigrams and trigrams for this project.
 
 Additionally, a significant amount of cleaning was required.  I removed punctuation (other than apostrophes), numbers, whitespace and profanity.  I made use of the tm library functions to perform most of these tasks.  The cleaning steps are shown in the code snippet below.
@@ -27,8 +28,8 @@ myCorpus <- tm_map(myCorpus, removeWords, profanity)
 ```
 
 
-Markov Chain
-========================================================
+## Markov Chain {.smaller}
+
 Andrey Markov discovered that you could predict some event, based on the events that occurred just prior to it.  Applying this to text prediction, the general concept is that the probability of predicting word w, is based on the words that precede it.  The probability is given as thus: 
 $P = \left(w_{n} | w_{1}, w_{2}, ..., w_{n-1}\right)$
 
@@ -39,8 +40,7 @@ There are going to be instances when a trigram (u, v, w) is not found in our dat
 The beauty of this method is in its simplicity.  The combination of using Markov's Chain along with the backoff methods for handling exceptions, provide an excellent prediction algorithm that handles all possible inputs.
 
 
-Algorithm Used for Prediction
-========================================================
+## Algorithm Used for Prediction {.smaller}
 
 The algorithm that I used in my prediction is based on Markov's discoveries, specifically this is known as a Second Order Markov Chain.
 
@@ -65,8 +65,7 @@ The algorithm that I used in my prediction is based on Markov's discoveries, spe
   return(res)
 ```
 
-Results
-========================================================
+## Results
 
 I am excited to report that I could use my data science skills to produce this application for you, my stakeholders.  
 
