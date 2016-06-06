@@ -19,9 +19,9 @@ Each directory in this repository contains code related to specific steps in the
 
 /FirstPredictor - R files that used to implement and fine tune my prediction algorithm.
 
-/ShinyPredictor - An implementation of my prediction algorithm into a user interface.  This is part 1 of the final project requirements.
+/ShinyPredictor - An implementation of my prediction algorithm into a user interface.  This is part 1 of the final project requirements.  The hosted version of the application can be found here: https://scottarendt.shinyapps.io/ShinyPredictor/
 
-/PredictionPresentation - A 5 slide presentation of my algorithm and application.  This is the second part of the final project requirements.
+/PredictionPresentation - A 5 slide presentation of my algorithm and application.  This is the second part of the final project requirements.  The hosted version of the presentation is located here: http://rpubs.com/sarendt/predictionpresentation
 
 ### Conclusions
 
@@ -31,7 +31,7 @@ Second, this was an interesting project.  I had never thought about what it take
 
 #### What would I do if someone gave me a grant to work on this for the next year?
 
-* Improve my Corpus processing.  Working under limitations of size, I took only the most popular trigrams.  There is no reason
+* Improve my Corpus processing.  Working under limitations of size, I took only the most popular trigrams.  There is no reason it could not be extended to quadragrams or to include multiple suggestions.  
 * Spend time on data storage efficiencies and R code best practices.  My Shiny app is fairly responsive but could easily be improved upon.
 * Learn more about natural language processing.
 * Apply some sort of Part of Speech weighting to my predictions.  While frequencies of nGram occurrence do this to some degree, it is not sufficient in my mind.
@@ -165,6 +165,9 @@ However, I soon discover that the "standard method" of dealing with text does no
 
 
 ### Resources
+
+Source for the Corpus that is the basis of the project.
+https://d396qusza40orc.cloudfront.net/dsscapstone/dataset/Coursera-SwiftKey.zip
 
 http://www.wordfrequency.info/free.asp?s=y
 Contains a list of the most frequently used English words.  Used in my OOV predictions.
